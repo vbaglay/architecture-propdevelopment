@@ -1,0 +1,21 @@
+@startuml
+!define C4_CONTEXT
+!include <C4/C4_Context>
+
+title PropDevelopment - Диаграмма контекста (C4)
+
+Person(owner, "Собственник", "Пользователь мобильного приложения для собственников")
+
+System_Boundary(propdev, "PropDevelopment") {
+    System(propSystem, "PropDevelopment")
+}
+
+System_Ext(smartIntercom, "Интеллектуальный домофон", "Поставщик умных устройств", "Обеспечивает функции видеодомофона и биометрического распознавания для открытия двери")
+System_Ext(smartBarrier, "Интеллектуальный шлагбаум", "Поставщик умных устройств", "Обеспечивает управление шлагбаумом с автоматическим распознаванием номеров автомобилей")
+
+' Взаимодействия:
+owner -down->  propSystem : Использует мобильное приложение\n(HTTPS/TLS, JWT)
+propSystem -down->  smartIntercom : Передаёт запросы на управление домофоном\n(REST API, HTTPS/TLS)
+propSystem -down->  smartBarrier : Передаёт запросы на управление шлагбаумом\n(REST API, HTTPS/TLS)
+
+@enduml
